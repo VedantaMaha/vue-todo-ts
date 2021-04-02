@@ -1,5 +1,5 @@
 <template>
-  <div class="task-item">
+  <div class="task-item" :style="{ backgroundColor: statusBackgroundColor }">
     <div class="task-item__data">
       <div class="task-item__data-title">
         <a :href="task.jiraUrl" target="_blank">{{ task.jiraTitle }}</a>
@@ -27,6 +27,29 @@ export default Vue.extend({
   props: {
     task: Object,
   },
+  computed: {
+    statusBackgroundColor(): string {
+      let backgroundColor = "";
+      switch (this.task.status) {
+        case "todo":
+          backgroundColor = "#fafafa";
+          break;
+        case "in_progress":
+          backgroundColor = "#fff3cd";
+          break;
+        case "done":
+          backgroundColor = "#d4edda";
+          break;
+        case "stalled":
+          backgroundColor = "#f8d7da";
+          break;
+        default:
+          backgroundColor = "#fafafa";
+          break;
+      }
+      return backgroundColor;
+    },
+  },
 });
 </script>
 
@@ -50,7 +73,7 @@ export default Vue.extend({
     }
 
     .task-item__data-select-input {
-      width: 20%;
+      width: 120px;
     }
   }
 
