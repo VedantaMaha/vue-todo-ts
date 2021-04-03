@@ -3,6 +3,7 @@
     <Header :title="pageTitle" />
     <!-- add form to add task component -->
     <TaskList :tasks="tasks" />
+    <TaskView :tasks="tasks" />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import Vue from "vue";
 import Header from "./components/Header.vue";
 import TaskList from "./components/TaskList.vue";
+import TaskView from "./components/TaskView.vue";
 
 export default Vue.extend({
   name: "App",
@@ -57,6 +59,7 @@ export default Vue.extend({
   components: {
     Header,
     TaskList,
+    TaskView,
   },
   computed: {
     pageTitle(): string {

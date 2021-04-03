@@ -21,6 +21,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .task-list {
+  display: inline-block;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0 5px;
