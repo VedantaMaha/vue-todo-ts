@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header :title="pageTitle" />
-    <!-- add form to add task component -->
-    <TaskList :tasks="tasks" />
+    <AddTask />
+    <TaskList @remove-task="removeTask" :tasks="tasks" />
     <TaskView :tasks="tasks" />
   </div>
 </template>
@@ -12,6 +12,7 @@ import Vue from "vue";
 import Header from "./components/Header.vue";
 import TaskList from "./components/TaskList.vue";
 import TaskView from "./components/TaskView.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default Vue.extend({
   name: "App",
@@ -60,12 +61,19 @@ export default Vue.extend({
     Header,
     TaskList,
     TaskView,
+    AddTask,
   },
   computed: {
     pageTitle(): string {
       let title = "Task Progress";
       // later change page title based on route
       return title;
+    },
+  },
+  methods: {
+    removeTask(id: number) {
+      console.log("removing task ", id);
+      this.tasks = this.tasks.filter((task) => task.id !== id);
     },
   },
 });

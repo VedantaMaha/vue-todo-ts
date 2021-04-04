@@ -13,7 +13,7 @@
         </select>
       </div>
     </div>
-    <div class="task-item__action">
+    <div class="task-item__action" @click="$emit('remove-task', task.id)">
       <i class="fas fa-times"></i>
     </div>
   </div>

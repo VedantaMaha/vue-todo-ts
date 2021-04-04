@@ -1,6 +1,11 @@
 <template>
-  <div class="task-list">
-    <TaskItem v-for="task in tasks" :key="task.id" :task="task" />
+  <div class="task-list" v-if="tasks.length">
+    <TaskItem
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+      @remove-task="$emit('remove-task', task.id)"
+    />
   </div>
 </template>
 

@@ -1,11 +1,23 @@
 <template>
-  <div class="task-view">
-    <TaskViewSection sectionTitle="DONE" :sectionTasks="doneTasks" />
+  <div
+    class="task-view"
+    v-if="doneTasks.length || inProgressTasks.length || stalledTasks.length"
+  >
     <TaskViewSection
+      v-if="doneTasks.length"
+      sectionTitle="DONE"
+      :sectionTasks="doneTasks"
+    />
+    <TaskViewSection
+      v-if="inProgressTasks.length"
       sectionTitle="IN PROGRESS"
       :sectionTasks="inProgressTasks"
     />
-    <TaskViewSection sectionTitle="STALLED" :sectionTasks="stalledTasks" />
+    <TaskViewSection
+      v-if="stalledTasks.length"
+      sectionTitle="STALLED"
+      :sectionTasks="stalledTasks"
+    />
   </div>
 </template>
 
@@ -14,7 +26,7 @@ import Vue, { PropType } from "vue";
 import TaskViewSection from "./TaskViewSection.vue";
 
 interface Task {
-  id: string;
+  id: number;
   jiraUrl: string;
   jiraTitle: string;
   status: string;
