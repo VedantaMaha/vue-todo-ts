@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header :title="pageTitle" />
-    <AddTask @add-task="addTask" />
+    <AddTask @add-task="addTask" @reset-tasks="resetTasks" />
     <TaskList @remove-task="removeTask" :tasks="tasks" />
     <TaskView :tasks="tasks" />
   </div>
@@ -82,6 +82,10 @@ export default Vue.extend({
         ...task,
       });
     },
+    resetTasks() {
+      console.log("resetting tasks");
+      this.tasks = [];
+    },
   },
 });
 </script>
@@ -129,6 +133,10 @@ export default Vue.extend({
   background-color: #03dac6;
   color: #000;
   font-weight: 700;
+}
+
+.btn--danger {
+  background-color: #dc3545;
 }
 
 .btn:focus {

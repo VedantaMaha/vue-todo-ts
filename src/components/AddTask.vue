@@ -1,6 +1,9 @@
 <template>
   <div class="add-task">
     <div class="add-task__action">
+      <button @click="$emit('reset-tasks')" class="btn btn--danger">
+        Reset
+      </button>
       <button
         @click="displayAddTask = !displayAddTask"
         class="btn btn--primary"
