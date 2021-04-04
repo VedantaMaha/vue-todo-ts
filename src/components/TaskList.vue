@@ -29,6 +29,6 @@ export default Vue.extend({
   display: inline-block;
   border: 1px solid black;
   padding: 0.5rem;
-  margin: 0 5px;
+  margin: 0 5px 1rem;
 }
 </style>

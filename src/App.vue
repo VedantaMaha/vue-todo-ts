@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header :title="pageTitle" />
-    <AddTask />
+    <AddTask @add-task="addTask" />
     <TaskList @remove-task="removeTask" :tasks="tasks" />
     <TaskView :tasks="tasks" />
   </div>
@@ -75,6 +75,13 @@ export default Vue.extend({
       console.log("removing task ", id);
       this.tasks = this.tasks.filter((task) => task.id !== id);
     },
+    addTask(task: any) {
+      console.log("adding task ", task);
+      this.tasks.push({
+        id: this.tasks.length + 1,
+        ...task,
+      });
+    },
   },
 });
 </script>
@@ -107,6 +114,21 @@ export default Vue.extend({
   text-decoration: none;
   font-size: 15px;
   font-family: inherit;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn--primary {
+  background-color: #24a0ed;
+}
+
+.btn--accent {
+  background-color: #03dac6;
+  color: #000;
+  font-weight: 700;
 }
 
 .btn:focus {
