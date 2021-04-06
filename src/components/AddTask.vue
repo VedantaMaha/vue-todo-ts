@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import { Task } from "@/models/Tasks.model";
 import Vue from "vue";
 import AddTaskForm from "./AddTaskForm.vue";
 
@@ -32,7 +33,7 @@ export default Vue.extend({
     AddTaskForm,
   },
   methods: {
-    addTask(task: any) {
+    addTask(task: Task) {
       this.$emit("add-task", task);
     },
   },

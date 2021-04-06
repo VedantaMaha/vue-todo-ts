@@ -13,48 +13,13 @@ import Header from "./components/Header.vue";
 import TaskList from "./components/TaskList.vue";
 import TaskView from "./components/TaskView.vue";
 import AddTask from "./components/AddTask.vue";
+import { Task } from "./models/Tasks.model";
 
 export default Vue.extend({
   name: "App",
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          jiraUrl: "https://zettabyte-goa.atlassian.net/browse/AV-3718",
-          jiraTitle:
-            "[User Management][Visitor] User login as Academic Director but he can see task from other schools when he has also user type Visitor added on him",
-          status: "done",
-        },
-        {
-          id: 2,
-          jiraUrl: "",
-          jiraTitle:
-            "explain fariz about material autocomplete and graphql query",
-          status: "done",
-        },
-        {
-          id: 3,
-          jiraUrl: "https://zettabyte-goa.atlassian.net/browse/AV-3778",
-          jiraTitle:
-            '[Test Correction][Auto Eval] Add functionality to upload "Element of proof" for Mark Entry of Auto Eval',
-          status: "in_progress",
-        },
-        {
-          id: 4,
-          jiraUrl: "https://zettabyte-goa.atlassian.net/browse/AV-3796",
-          jiraTitle:
-            "[Academic Kit][Folder 06] Need improvement on how to display Doc expected folder inside folder 06",
-          status: "todo",
-        },
-        {
-          id: 5,
-          jiraUrl: "https://zettabyte-goa.atlassian.net/browse/AV-3787",
-          jiraTitle:
-            '[Test Creation][View of Test Sheet] Displayed different "Type test name" on Test Creation page evaluation by competency',
-          status: "stalled",
-        },
-      ],
+      tasks: [] as Task[],
     };
   },
   components: {
@@ -75,17 +40,21 @@ export default Vue.extend({
       console.log("removing task ", id);
       this.tasks = this.tasks.filter((task) => task.id !== id);
     },
-    addTask(task: any) {
+    addTask(task: Task) {
       console.log("adding task ", task);
       this.tasks.push({
-        id: this.tasks.length + 1,
         ...task,
+        id: this.tasks.length + 1,
       });
     },
     resetTasks() {
       console.log("resetting tasks");
       this.tasks = [];
     },
+  },
+  created() {
+    this.$store.dispatch("fetchTasks");
+    this.tasks = this.$store.getters.getTasks;
   },
 });
 </script>

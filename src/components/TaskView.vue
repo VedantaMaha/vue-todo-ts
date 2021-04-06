@@ -24,13 +24,7 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import TaskViewSection from "./TaskViewSection.vue";
-
-interface Task {
-  id: number;
-  jiraUrl: string;
-  jiraTitle: string;
-  status: string;
-}
+import { Task } from "../models/Tasks.model";
 
 export default Vue.extend({
   name: "TaskView",
