@@ -2,7 +2,11 @@
   <div id="app">
     <Header :title="pageTitle" />
     <AddTask @add-task="addTask" @reset-tasks="resetTasks" />
-    <TaskList @remove-task="removeTask" :tasks="tasks" />
+    <TaskList
+      @remove-task="removeTask"
+      @update-task="updateTask"
+      :tasks="tasks"
+    />
     <TaskView :tasks="tasks" />
   </div>
 </template>
@@ -17,11 +21,6 @@ import { Task } from "./models/Tasks.model";
 
 export default Vue.extend({
   name: "App",
-  data() {
-    return {
-      tasks: [] as Task[],
-    };
-  },
   components: {
     Header,
     TaskList,
@@ -31,30 +30,35 @@ export default Vue.extend({
   computed: {
     pageTitle(): string {
       let title = "Task Progress";
-      // later change page title based on route
       return title;
+    },
+    tasks(): Task[] {
+      return this.$store.getters.getTasks;
     },
   },
   methods: {
-    removeTask(id: number) {
-      console.log("removing task ", id);
-      this.tasks = this.tasks.filter((task) => task.id !== id);
+    removeTask(taskId: number) {
+      console.log("removing task ", taskId);
+      this.$store.dispatch("removeTask", taskId);
+    },
+    updateTask(task: Task) {
+      console.log("updating task ", task);
+      this.$store.dispatch("updateTask", task);
     },
     addTask(task: Task) {
       console.log("adding task ", task);
-      this.tasks.push({
+      this.$store.dispatch("addTask", {
         ...task,
         id: this.tasks.length + 1,
       });
     },
     resetTasks() {
       console.log("resetting tasks");
-      this.tasks = [];
+      this.$store.dispatch("resetTask");
     },
   },
   created() {
     this.$store.dispatch("fetchTasks");
-    this.tasks = this.$store.getters.getTasks;
   },
 });
 </script>

@@ -6,11 +6,33 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tasks: [],
+    tasks: [] as Task[],
   },
   mutations: {
-    SET_TASKS(state, tasks) {
+    INIT_TASKS(state, tasks: Task[]) {
       state.tasks = tasks;
+      localStorage.setItem("TASK_LIST", JSON.stringify(state.tasks));
+    },
+    ADD_TASKS(state, task: Task) {
+      state.tasks = [...state.tasks, task];
+      localStorage.setItem("TASK_LIST", JSON.stringify(state.tasks));
+    },
+    REMOVE_TASKS(state, taskId: number) {
+      const remainingTasks = state.tasks.filter((task) => task.id !== taskId);
+      state.tasks = remainingTasks;
+      localStorage.setItem("TASK_LIST", JSON.stringify(state.tasks));
+    },
+    RESET_TASKS(state) {
+      state.tasks = [];
+      localStorage.setItem("TASK_LIST", JSON.stringify(state.tasks));
+    },
+    UPDATE_TASKS(state, updatedTask: Task) {
+      state.tasks.forEach((task) => {
+        if (task.id === updatedTask.id) {
+          task = updatedTask;
+        }
+      });
+      localStorage.setItem("TASK_LIST", JSON.stringify(state.tasks));
     },
   },
   actions: {
@@ -52,7 +74,28 @@ export default new Vuex.Store({
           status: "stalled",
         },
       ];
-      context.commit("SET_TASKS", tasks);
+      const localStorageTasks = localStorage.getItem("TASK_LIST");
+      if (
+        typeof localStorageTasks === "string" &&
+        JSON.parse(localStorageTasks).length
+      ) {
+        context.commit("INIT_TASKS", JSON.parse(localStorageTasks));
+      } else {
+        // if there is no tasks exist in localstorage, use default tasks
+        context.commit("INIT_TASKS", tasks);
+      }
+    },
+    addTask(context, task: Task) {
+      context.commit("ADD_TASKS", task);
+    },
+    removeTask(context, taskId: number) {
+      context.commit("REMOVE_TASKS", taskId);
+    },
+    resetTask(context) {
+      context.commit("RESET_TASKS");
+    },
+    updateTask(context, updatedTask: Task) {
+      context.commit("UPDATE_TASKS", updatedTask);
     },
   },
   modules: {},

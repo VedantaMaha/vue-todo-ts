@@ -40,7 +40,7 @@ export default Vue.extend({
   methods: {
     onSubmit(e: any) {
       e.preventDefault();
-      if (!this.jiraUrl || !this.jiraTitle) {
+      if (!this.jiraTitle) {
         return;
       }
       const payload = {

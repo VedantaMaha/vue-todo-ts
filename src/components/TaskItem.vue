@@ -1,11 +1,19 @@
 <template>
-  <div class="task-item" :style="{ backgroundColor: statusBackgroundColor }">
+  <div
+    class="task-item"
+    :class="{ 'task-item--bottom-space': !isLastTask }"
+    :style="{ backgroundColor: statusBackgroundColor }"
+  >
     <div class="task-item__data">
       <div class="task-item__data-title">
         <a :href="task.jiraUrl" target="_blank">{{ task.jiraTitle }}</a>
       </div>
       <div class="task-item__data-status">
-        <select v-model="task.status" class="task-item__data-select-input">
+        <select
+          v-model="task.status"
+          @change="$emit('update-task', JSON.parse(JSON.stringify(task)))"
+          class="task-item__data-select-input"
+        >
           <option value="todo">Todo</option>
           <option value="in_progress">In Progress</option>
           <option value="done">Done</option>
@@ -26,6 +34,7 @@ export default Vue.extend({
   name: "TaskItem",
   props: {
     task: Object,
+    isLastTask: Boolean,
   },
   computed: {
     statusBackgroundColor(): string {
@@ -57,7 +66,6 @@ export default Vue.extend({
 .task-item {
   display: flex;
   background-color: #fafafa;
-  margin-bottom: 10px;
   padding: 0.5rem;
 
   .task-item__data {
@@ -84,6 +92,10 @@ export default Vue.extend({
     justify-content: center;
     cursor: pointer;
   }
+}
+
+.task-item--bottom-space {
+  margin-bottom: 10px;
 }
 
 .fas {

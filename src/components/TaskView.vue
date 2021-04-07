@@ -3,21 +3,23 @@
     class="task-view"
     v-if="doneTasks.length || inProgressTasks.length || stalledTasks.length"
   >
-    <TaskViewSection
-      v-if="doneTasks.length"
-      sectionTitle="DONE"
-      :sectionTasks="doneTasks"
-    />
-    <TaskViewSection
-      v-if="inProgressTasks.length"
-      sectionTitle="IN PROGRESS"
-      :sectionTasks="inProgressTasks"
-    />
-    <TaskViewSection
-      v-if="stalledTasks.length"
-      sectionTitle="STALLED"
-      :sectionTasks="stalledTasks"
-    />
+    <div class="task-view__wrapper">
+      <TaskViewSection
+        v-if="doneTasks.length"
+        sectionTitle="DONE"
+        :sectionTasks="doneTasks"
+      />
+      <TaskViewSection
+        v-if="inProgressTasks.length"
+        sectionTitle="IN PROGRESS"
+        :sectionTasks="inProgressTasks"
+      />
+      <TaskViewSection
+        v-if="stalledTasks.length"
+        sectionTitle="STALLED"
+        :sectionTasks="stalledTasks"
+      />
+    </div>
   </div>
 </template>
 
@@ -51,9 +53,12 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .task-view {
   display: inline-block;
-  border: 1px solid black;
-  padding: 0.5rem;
-  margin: 0 5px 1rem;
-  background-color: #fafafa;
+  width: 100%;
+
+  .task-view__wrapper {
+    border: 1px solid black;
+    padding: 0.5rem;
+    margin: 5px 5px 1rem;
+  }
 }
 </style>
